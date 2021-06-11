@@ -5,10 +5,10 @@ const urljoin = require('url-join');
 const _ = require('lodash');
 
 class VaultApiClient {
-
     /**
      * @param {Object} config
      * @param {String} config.url - the url of the vault server
+     * @param {String} config.requestOptions - additional options to pass on to the request http client
      * @param {String} [config.apiVersion='v1']
      * @param {Object} logger
      */
@@ -32,6 +32,7 @@ class VaultApiClient {
             followAllRedirects: true,
             headers,
             json: true,
+            ...this.__config.requestOptions
         };
 
         this._logger.debug(
