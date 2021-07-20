@@ -20,7 +20,7 @@
     "assign-deep": "^1.0.1",
     "aws4": "^1.8.0",
     "bluebird": "^3.7.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "long-timeout": "^0.1.1",
     "pretty-ms": "^2.1.0",
     "request": "^2.88.0",
@@ -36,7 +36,7 @@
     "chai": "^3.5.0",
     "co-mocha": "^1.2.2",
     "deep-freeze": "^0.0.1",
-    "mocha": "^3.5.3",
+    "mocha": "^9.0.2",
     "sinon": "^2.4.1",
     "sinon-chai": "^2.14.0"
   }
