@@ -27,7 +27,8 @@ module.exports = function () {
             }
 
             dataAcc += data.toString(); //we receive binary data here
-            const found = dataAcc.match(/Root Token: ([a-z0-9\-]+)\n/i);
+
+            const found = dataAcc.match(/Root Token: ([a-z0-9\-\.]+)\n/i);
 
             if (found !== null) {
                 dataAcc = null;

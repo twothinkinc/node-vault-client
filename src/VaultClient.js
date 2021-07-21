@@ -223,6 +223,28 @@ class VaultClient {
             });
     }
 
+
+    /**
+     * Deletes a secret from vault
+     *
+     * @param path - path used to write data
+     * @param {object} data - data to write
+     * @returns {Promise<T | never>}
+     */
+     delete(path) {
+        this.__log.debug('delete secret %s', path);
+        return this.__auth.getAuthToken()
+            .then((token) => this.__api.makeRequest('DELETE', path, data, {'X-Vault-Token': token.getId()}))
+            .then((response) => {
+                this.__log.debug('secret %s was deleted (if it exists)', path);
+                return response;
+            })
+            .catch((reason) => {
+                this.__log.error('deleted secret failed: %s', reason.message);
+                throw reason;
+            });
+    }
+
     /**
      * @private
      */
