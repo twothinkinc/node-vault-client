@@ -234,7 +234,7 @@ class VaultClient {
      delete(path) {
         this.__log.debug('delete secret %s', path);
         return this.__auth.getAuthToken()
-            .then((token) => this.__api.makeRequest('DELETE', path, data, {'X-Vault-Token': token.getId()}))
+            .then((token) => this.__api.makeRequest('DELETE', path, null, {'X-Vault-Token': token.getId()}))
             .then((response) => {
                 this.__log.debug('secret %s was deleted (if it exists)', path);
                 return response;

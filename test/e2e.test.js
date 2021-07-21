@@ -46,6 +46,25 @@ describe('E2E', function () {
         expect(list.getData()).is.deep.equal({keys: ['tst-val']});
     });
 
+
+    it('Simple write/delete/read', function* () {
+        const testData = {tst: 'testData', tstInt: 12345};
+
+        const vaultClient = new VaultClient(this.bootOpts);
+
+        // write shold work.
+        yield vaultClient.write('/kv-v1/tst-val', testData);
+
+        const res = yield vaultClient.read('kv-v1/tst-val');
+        expect(res.getData()).is.deep.equal(testData);
+
+        // deleting key should work.
+        yield vaultClient.delete('kv-v1/tst-val');
+        
+        vaultClient.read('kv-v1/tst-val').catch(error => expect(error).to.be.an('error').with.property('statusCode', 404));
+
+    });
+
     it('Write for ssh backend should return response', function *() {
         const vaultClient = new VaultClient(this.bootOpts);
         yield vaultClient.write('/sys/mounts/ssh', {type: 'ssh'});
