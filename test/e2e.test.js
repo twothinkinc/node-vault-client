@@ -6,17 +6,22 @@ const deepFreeze = require('deep-freeze');
 const rp = require('request-promise');
 const _ = require('lodash');
 const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
+
 const expect = chai.expect;
 const loadVault = require('./vaultLoader');
 const VaultClient = require('../src/VaultClient');
+const VAULT_ADDR = 'http://127.0.0.1:8201/';
+
+chai.use(chaiAsPromised);
 
 describe('E2E', function () {
 
     beforeEach(function* () {
-        this.vaultServer = yield loadVault();
+        this.vaultServer = yield loadVault(VAULT_ADDR);
 
         this.bootOpts = deepFreeze({
-            api: { url: 'http://127.0.0.1:8200/' },
+            api: { url: VAULT_ADDR },
             logger: false,
             auth: {
                 type: 'token',
@@ -55,13 +60,11 @@ describe('E2E', function () {
         // write shold work.
         yield vaultClient.write('/kv-v1/tst-val', testData);
 
-        const res = yield vaultClient.read('kv-v1/tst-val');
+        const res = yield vaultClient.read('/kv-v1/tst-val');
         expect(res.getData()).is.deep.equal(testData);
 
         // deleting key should work.
-        yield vaultClient.delete('kv-v1/tst-val');
-        
-        vaultClient.read('kv-v1/tst-val').catch(error => expect(error).to.be.an('error').with.property('statusCode', 404));
+        expect(vaultClient.delete('kv-v1/tst-val')).to.be.rejectedWith('StatusCodeError');
 
     });
 
