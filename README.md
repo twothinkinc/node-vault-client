@@ -28,6 +28,10 @@ const vaultClient = VaultClient.boot('main', {
 vaultClient.read('secret/tst').then(v => {
     console.log(v);
 }).catch(e => console.error(e));
+
+vaultClient.delete('secret/tst').then(v => {
+    console.log(v);
+}).catch(e => console.error(e));
 ```
 
 ## Supported Auth Backends

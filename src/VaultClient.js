@@ -225,11 +225,13 @@ class VaultClient {
 
 
     /**
-     * Deletes a secret from vault
+     * Deletes a secret from vault. Note that the vault will not tell you if the
+     * item was successfully deleted. A subsequent read is required to determine
+     * if the item has been removed. Typically resolves to undefined on success.
      *
      * @param path - path used to write data
      * @param {object} data - data to write
-     * @returns {Promise<T | never>}
+     * @returns {Promise<T | never>} - undefined on success
      */
      delete(path) {
         this.__log.debug('delete secret %s', path);
