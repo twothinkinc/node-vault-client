@@ -37,12 +37,12 @@ describe('E2E', function () {
 
         const vaultClient = new VaultClient(this.bootOpts);
 
-        yield vaultClient.write('/secret/tst-val', testData);
+        yield vaultClient.write('/kv-v1/tst-val', testData);
 
-        const res = yield vaultClient.read('secret/tst-val');
+        const res = yield vaultClient.read('kv-v1/tst-val');
         expect(res.getData()).is.deep.equal(testData);
 
-        const list = yield vaultClient.list('secret');
+        const list = yield vaultClient.list('kv-v1');
         expect(list.getData()).is.deep.equal({keys: ['tst-val']});
     });
 
@@ -62,18 +62,18 @@ describe('E2E', function () {
         const testData = Object.freeze({tstStr: 'testData', tstInt: 12345});
 
         const vaultClient = new VaultClient(this.bootOpts);
-        yield vaultClient.write('/secret/a', testData);
-        yield vaultClient.write('/secret/b', {tst: 'ZZZ'});
-
+        yield vaultClient.write('/kv-v1/a', testData);
+        yield vaultClient.write('/kv-v1/b', {tst: 'ZZZ'});
+    
         process.env.NODE_CONFIG_DIR = `${__dirname}/data/config-base`;
         const config = require('config');
-
+   
         expect(JSON.parse(JSON.stringify(config))).to.deep.equal({deep: {aStr: '', aInt: 0}, b: 'NOT WORKING'});
 
         yield vaultClient.fillNodeConfig();
 
         expect(JSON.parse(JSON.stringify(config))).to.deep.equal({deep: {aStr: testData.tstStr, aInt: testData.tstInt}, b: 'ZZZ'});
-    });
+   });
 
     it('should handle empty custom-vault-variables', function* () {
         const testData = Object.freeze({tstStr: 'testData', tstInt: 12345});
@@ -104,11 +104,11 @@ describe('E2E', function () {
 
             const vaultClient = new VaultClient(_.merge({}, this.bootOpts, {auth: {config: {token: tmpToken}}}));
 
-            yield vaultClient.write('/secret/tst-val', testData);
+            yield vaultClient.write('/kv-v1/tst-val', testData);
 
             yield new Promise(resolve => {setTimeout(() => resolve(), 2500)});
 
-            const res = yield vaultClient.read('secret/tst-val');
+            const res = yield vaultClient.read('kv-v1/tst-val');
             expect(res.getData()).is.deep.equal(testData);
         });
     });
@@ -145,9 +145,9 @@ describe('E2E', function () {
                 const vaultClient = new VaultClient(_.merge({}, this.bootOpts, {auth: {type: 'appRole', config: {role_id: roleId}}}));
 
 
-                yield vaultClient.write('/secret/tst-val', testData);
+                yield vaultClient.write('/kv-v1/tst-val', testData);
 
-                const res = yield vaultClient.read('secret/tst-val');
+                const res = yield vaultClient.read('kv-v1/tst-val');
                 expect(res.getData()).is.deep.equal(testData);
             });
 
@@ -172,9 +172,9 @@ describe('E2E', function () {
                 const vaultClient = new VaultClient(_.merge({}, this.bootOpts, {auth: {type: 'appRole', config: {role_id: roleId, secret_id: secretId}}}));
 
 
-                yield vaultClient.write('/secret/tst-val', testData);
+                yield vaultClient.write('/kv-v1/tst-val', testData);
 
-                const res = yield vaultClient.read('secret/tst-val');
+                const res = yield vaultClient.read('kv-v1/tst-val');
                 expect(res.getData()).is.deep.equal(testData);
             });
         });

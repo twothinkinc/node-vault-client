@@ -2,8 +2,8 @@
 
 module.exports = {
     deep: {
-        aStr: 'secret/a#tstStr',
-        aInt: 'secret/a#tstInt',
+        aStr: 'kv-v1/a#tstStr',
+        aInt: 'kv-v1/a#tstInt',
     },
-    b: 'secret/b#tst',
+    b: 'kv-v1/b#tst',
 };
