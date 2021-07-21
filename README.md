@@ -53,6 +53,7 @@ vaultClient.delete('secret/tst').then(v => {
         * [.read(path)](#VaultClient+read) ⇒ <code>Promise.&lt;Lease&gt;</code>
         * [.list(path)](#VaultClient+list) ⇒ <code>Promise.&lt;Lease&gt;</code>
         * [.write(path, data)](#VaultClient+write) ⇒ <code>Promise.&lt;(T\|never)&gt;</code>
+        * [.delete(path)](#VaultClient+delete) ⇒ <code>Promise.&lt;(T\|never)&gt;</code>
     * _static_
         * [.boot(name, [options])](#VaultClient.boot) ⇒
         * [.get(name)](#VaultClient.get) ⇒
