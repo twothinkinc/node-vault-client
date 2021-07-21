@@ -6,14 +6,14 @@ const deepFreeze = require('deep-freeze');
 const rp = require('request-promise');
 const _ = require('lodash');
 const chai = require('chai');
-const chaiAsPromised = require('chai-as-promised');
 
-const expect = chai.expect;
 const loadVault = require('./vaultLoader');
 const VaultClient = require('../src/VaultClient');
+const { StatusCodeError } = require('request-promise/errors');
+const { assert } = require('chai');
 const VAULT_ADDR = 'http://127.0.0.1:8201/';
 
-chai.use(chaiAsPromised);
+const expect = chai.expect;
 
 describe('E2E', function () {
 
@@ -52,20 +52,30 @@ describe('E2E', function () {
     });
 
 
-    it('Simple write/delete/read', function* () {
+    it('Simple write, read, delete, read', function* ()  {
         const testData = {tst: 'testData', tstInt: 12345};
 
         const vaultClient = new VaultClient(this.bootOpts);
 
-        // write shold work.
-        yield vaultClient.write('/kv-v1/tst-val', testData);
-
+        // write should work.
+        const writeRes = yield vaultClient.write('/kv-v1/tst-val', testData);
         const res = yield vaultClient.read('/kv-v1/tst-val');
         expect(res.getData()).is.deep.equal(testData);
 
-        // deleting key should work.
-        expect(vaultClient.delete('kv-v1/tst-val')).to.be.rejectedWith('StatusCodeError');
+        // deleting the key should work 
+        const delResult = yield vaultClient.delete('kv-v1/tst-val');
+        
+        let deletedResult;
+        
+        // due to the way promise handling works, we have to wait for the error to be thrown.
+        try {
+            deletedResult = yield vaultClient.read('/kv-v1/tst-val');
+        } catch (err) {
+            expect(err.statusCode).to.equal(404);
+            deletedResult = null;
+        }
 
+        expect(deletedResult).is.null;
     });
 
     it('Write for ssh backend should return response', function *() {
