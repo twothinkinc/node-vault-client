@@ -19,14 +19,12 @@
   "dependencies": {
     "assign-deep": "^1.0.1",
     "aws4": "^1.8.0",
+    "axios": "^1.4.0",
     "bluebird": "^3.7.0",
-    "co-mocha": "^1.2.2",
-    "config": "^3.3.6",
+    "config": "1.x",
     "lodash": "^4.17.21",
     "long-timeout": "^0.1.1",
     "pretty-ms": "^2.1.0",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.4",
     "url-join": "^2.0.5"
   },
   "peerDependencies": {
@@ -37,7 +35,7 @@
     "aws-sdk": "^2.544.0",
     "chai": "^4.3.4",
     "deep-freeze": "^0.0.1",
-    "mocha": "^9.0.2",
+    "mocha": "^10.2.0",
     "sinon": "^2.4.1",
     "sinon-chai": "^2.14.0"
   }

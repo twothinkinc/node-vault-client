@@ -1,6 +1,6 @@
 'use strict';
 
-const rp = require('request-promise');
+const axios = require('axios');
 const urljoin = require('url-join');
 const _ = require('lodash');
 
@@ -41,7 +41,7 @@ class VaultApiClient {
             requestOptions.uri
         );
 
-        return rp(requestOptions)
+        return axios(requestOptions)
             .then((response) => {
                 this._logger.debug('%s %s response body:\n%s',
                     requestOptions.method,

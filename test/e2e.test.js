@@ -1,16 +1,11 @@
 'use strict';
-
-require('co-mocha');
-
 const deepFreeze = require('deep-freeze');
-const rp = require('request-promise');
+const axios = require('axios');
 const _ = require('lodash');
 const chai = require('chai');
 
 const loadVault = require('./vaultLoader');
 const VaultClient = require('../src/VaultClient');
-const { StatusCodeError } = require('request-promise/errors');
-const { assert } = require('chai');
 const VAULT_ADDR = 'http://127.0.0.1:8201/';
 
 const expect = chai.expect;
@@ -128,7 +123,7 @@ describe('E2E', function () {
 
             const testData = {tst: 'testData', tstInt: 12345};
 
-            let tmpToken = yield rp({method: 'POST', uri: `${this.bootOpts.api.url}v1/auth/token/create-orphan`, body: {
+            let tmpToken = yield axios({method: 'POST', uri: `${this.bootOpts.api.url}v1/auth/token/create-orphan`, body: {
                 period: 2,
                 explicit_max_ttl: 10,
             }, json: true, headers: {'X-Vault-Token': this.bootOpts.auth.config.token}});
