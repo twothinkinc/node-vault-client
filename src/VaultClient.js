@@ -44,6 +44,14 @@ class VaultClient {
     }
 
     /**
+     * Shutdown the client cleanly, clearing set timers and intervals.
+     * @returns
+     */
+    shutdown() {
+        this.__auth.shutdown();
+    }
+
+    /**
      * Boot an instance of Vault
      *
      * The instance will be stored in a local hash. Calling Vault.boot multiple

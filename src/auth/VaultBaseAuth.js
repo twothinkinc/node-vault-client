@@ -135,6 +135,16 @@ class VaultBaseAuth {
                 throw reason;
             });
     }
+
+    /**
+     * stop the long timer so that we can exit node cleanly
+     */
+    shutdown() {
+        if (this.__refreshTimeout !== null) {
+            lt.clearTimeout(this.__refreshTimeout);
+            this.__refreshTimeout = null;
+        }
+    }
 }
 
 module.exports = VaultBaseAuth;
