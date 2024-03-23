@@ -19,7 +19,7 @@
   "dependencies": {
     "assign-deep": "^1.0.1",
     "aws4": "^1.8.0",
-    "axios": "^1.4.0",
+    "axios": "^1.6.8",
     "bluebird": "^3.7.0",
     "config": "1.x",
     "lodash": "^4.17.21",
