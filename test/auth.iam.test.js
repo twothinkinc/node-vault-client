@@ -15,7 +15,7 @@ const logger = _.fromPairs(_.map(['error', 'warn', 'info', 'debug', 'trace'], (p
 describe('Unit AWS auth backend :: IAM', function () {
 
     function base64decode(str) {
-        return new Buffer(str, 'base64').toString();
+        return Buffer.from(str, 'base64').toString();
     }
 
     function getAuthorizationHeaderRegExp(awsAccessKey) {

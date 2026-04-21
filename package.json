@@ -35,9 +35,8 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "co-mocha": "^1.2.2",
     "deep-freeze": "^0.0.1",
-    "mocha": "^10.2.0",
+    "mocha": "^11.7.5",
     "sinon": "^2.4.1",
     "sinon-chai": "^2.14.0"
   },
